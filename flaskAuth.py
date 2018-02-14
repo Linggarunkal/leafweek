@@ -38,9 +38,9 @@ class User(db.Model):
         try:
             data = s.loads(token)
         except SignatureExpired:
-            return None    # valid token, but expired
+            return jsonify({'Error': '500', 'Message': 'Token Expired'})
         except BadSignature:
-            return None    # invalid token
+            return jsonify({'Error': '400', 'Message': 'Invalid Token'})
         user = User.query.get(data['id'])
         return user
 
